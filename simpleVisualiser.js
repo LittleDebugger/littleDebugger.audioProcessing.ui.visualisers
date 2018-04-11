@@ -1,7 +1,11 @@
 ﻿// Simple Visualiser.
-littleDebugger.common.namespacer.createNamespace("littleDebugger.audioProcessing.ui");
+littleDebugger.common.namespacer.createNamespace("littleDebugger.audioProcessing.ui.visualisers");
 
-littleDebugger.audioProcessing.ui.simpleVisualiser = function (canvas, zeroX, waveColor) {
+// Initialise a visualiser
+// <canvas> The canvas element on which the graph should be drawn.
+// <xAxis> Boolen flag for bold x-axis.
+// <waveColor> Color of the wave.
+littleDebugger.audioProcessing.ui.visualisers.simpleVisualiser = function (canvas, xAxis, waveColor) {
     var that = {};
 
     var ctx = canvas.getContext("2d");
@@ -16,10 +20,11 @@ littleDebugger.audioProcessing.ui.simpleVisualiser = function (canvas, zeroX, wa
     // <color> Color of the wave.
     that.drawWave = function (signal) {
         ctx.strokeStyle = waveColor;
+        ctx.st
 
         ctx.beginPath();
 
-        for (var i = 0; i < signal; i++) {
+        for (var i = 0; i < signal.length; i++) {
             var y = signal[i];
             ctx.lineTo(i, canvas.height - ((y * noneCroppingHeight / 2) + (canvas.height / 2)));
         }
@@ -41,7 +46,7 @@ littleDebugger.audioProcessing.ui.simpleVisualiser = function (canvas, zeroX, wa
         drawVirticalLine(canvas.width / 8 * 5, divideColor);
         drawVirticalLine(canvas.width / 8 * 6, divideColor);
         drawVirticalLine(canvas.width / 8 * 7, divideColor);
-        drawVirticalLine(canvas.width / 2, zeroX ? axisColor : divideColor);
+        drawVirticalLine(canvas.width / 2, xAxis ? axisColor : divideColor);
     }
 
     // Draw a horizonal line of the canvas
@@ -79,6 +84,8 @@ littleDebugger.audioProcessing.ui.simpleVisualiser = function (canvas, zeroX, wa
         setDimensions();
     };
 
-    reset();
+    that.reset();
     setDimensions();
+
+    return that;
 }
